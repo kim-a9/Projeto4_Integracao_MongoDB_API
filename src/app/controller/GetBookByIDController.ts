@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { bookRepository } from '../../core/repository/BookRepository';
+import { BookRepository } from '../../core/repository/BookRepository';
 import { GetBookByID } from '../../core/usecases/GetBookByID';
 
 
@@ -8,7 +8,7 @@ export class GetBookByIDController{
         const { id } = req.params;
 
         try {
-            const getBook = new GetBookByID(bookRepository);
+            const getBook = new GetBookByID(BookRepository);
             const book = await getBook.execute(id);
             return res.status(201).json(book);
         } catch (e) {

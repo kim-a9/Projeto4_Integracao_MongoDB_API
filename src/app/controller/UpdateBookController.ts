@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { bookRepository } from '../../core/repository/BookRepository';
+import { BookRepository } from '../../core/repository/BookRepository';
 import { UpdateBook } from '../../core/usecases/UpdateBook';
 
 export class UpdateBookController{
@@ -8,9 +8,9 @@ export class UpdateBookController{
         const book = req.body;
 
         try {
-            const updateBook = new UpdateBook(bookRepository);
+            const updateBook = new UpdateBook(BookRepository);
             await updateBook.execute(id, book);
-            res.status(200).json({ message: 'Livro atualizado com sucesso' });
+            return res.status(200).json({ message: 'Livro atualizado com sucesso' });
         } catch (e) {
             return res.status(400).json({ error: e});
         }
