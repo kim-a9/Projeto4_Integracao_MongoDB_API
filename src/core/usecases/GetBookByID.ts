@@ -6,7 +6,7 @@ export class GetBookByID{
 
     async execute(bookID: string): Promise<Book | undefined> {
 
-        const bookFound = await this.bookRepository.findByID(bookID);
+        const bookFound = await this.bookRepository.getByID(bookID);
 
         if(!bookFound) {
             throw new Error('Livro não encontrado');

@@ -20,7 +20,7 @@ export class CreateBook {
             newBook.genre,
         );
 
-        await this.bookRepository.save(createdBook);
+        await this.bookRepository.create(createdBook);
         return createdBook;
     }
 }
