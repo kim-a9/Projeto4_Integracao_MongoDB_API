@@ -8,7 +8,7 @@ export class CreateBookController{
 
         try {
             const createBook = new CreateBook(bookRepository);
-            const book = await CreateBook.execute({ title, author, genre });
+            const book = await createBook.execute({ title, author, genre });
             res.status(201).json(book);
         } catch (e) {
             return res.status(400).json({ error: e})
