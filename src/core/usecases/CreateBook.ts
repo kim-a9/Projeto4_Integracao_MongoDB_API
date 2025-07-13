@@ -5,22 +5,25 @@ export interface ICreateBook{
     title: string;
     author: string;
     genre: string;
+    bookID: string;
+
 }
 
 export class CreateBook {
     constructor(private bookRepository: BookRepository) {}
 
-    async execute(newBook:ICreateBook): Promise<Book> {
-        if (!newBook.title) {
+    async execute(data: ICreateBook): Promise<Book> {
+        if (!data.title) {
             throw new Error('Insira um título para o livro.');
         }
-        const createdBook = new Book(
-            newBook.title,
-            newBook.author,
-            newBook.genre,
+        const book = new Book(
+            data.title,
+            data.author,
+            data.genre,
+            data.bookID
         );
 
-        await this.bookRepository.create(createdBook);
-        return createdBook;
+        await this.bookRepository.createBook(book);
+        return book;
     }
 }
