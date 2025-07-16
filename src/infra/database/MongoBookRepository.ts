@@ -4,33 +4,29 @@ import { BookModel } from '../database/MongooseBookModel';
 
 export class MongoBookRepository implements BookRepository {
     private toEntity(doc: any): Book{
-        return new Book(
-            doc.title, 
-            doc.author, 
-            doc.genre,
-            doc.bookID,
-            );
+        return new Book(doc.title, doc.author, doc.genre, doc.id.toString());
         }
         
         async createBook(book: Book): Promise<Book>{
-            const newBook = await BookModel.create(book);
-            return this.toEntity(newBook);
+            const doc = await BookModel.create(book);
+            return this.toEntity(doc);
         };
         
-        // async getByID(bookID: string): Promise<Book | null> {
-            
-        //     if(!bookID){
-        //         throw new Error('Não foi possível encontrar o livro');
-        //     }
-        //     const bookFound = await this.getByID(bookID);
-        // };
+        async getByID(id: string): Promise<Book | null> {
+            const doc = await BookModel.findOne({ _id: id });
 
-        // async updateBook(book: Book): Promise<void> {
-        //     throw new Error('Method not implemented.');
-        // };
+            // if(!id){
+            //     throw new Error('Não foi possível encontrar o livro');
+            // }
+            return doc ? this.toEntity(doc): null;
+        };
 
-        // async delete(id: string): Promise<void> {
-        //     throw new Error('Method not implemented.');
-        // };
+        async updateBook(book: Book): Promise<void> {
+            throw new Error('Method not implemented.');
+        };
+
+        async delete(id: string): Promise<void> {
+            throw new Error('Method not implemented.');
+        };
 
 }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { BookRepository } from '../../core/repository/BookRepository';
+// import { BookRepository } from '../../core/repository/BookRepository';
+import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
 import { GetBookByID } from '../../core/usecases/GetBookByID';
 
 
@@ -8,7 +9,7 @@ export class GetBookByIDController{
         const { id } = req.params;
 
         try {
-            const getBook = new GetBookByID(BookRepository);
+            const getBook = new GetBookByID(new MongoBookRepository());
             const book = await getBook.execute(id);
             return res.status(201).json(book);
         } catch (e) {

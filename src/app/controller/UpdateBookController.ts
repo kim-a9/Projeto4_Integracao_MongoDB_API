@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { BookRepository } from '../../core/repository/BookRepository';
+// import { BookRepository } from '../../core/repository/BookRepository';
+import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
 import { UpdateBook } from '../../core/usecases/UpdateBook';
 
 export class UpdateBookController{
@@ -8,7 +9,7 @@ export class UpdateBookController{
         const book = req.body;
 
         try {
-            const updateBook = new UpdateBook(BookRepository);
+            const updateBook = new UpdateBook(new MongoBookRepository());
             await updateBook.execute(id, book);
             return res.status(200).json({ message: 'Livro atualizado com sucesso' });
         } catch (e) {

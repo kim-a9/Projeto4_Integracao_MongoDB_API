@@ -1,11 +1,13 @@
 import { Book } from '../entities/Book';
-import { BookRepository } from '../repository/BookRepository';
+// import { BookRepository } from '../repository/BookRepository';
+import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
+
 
 export class UpdateBook{
-    constructor(private bookrepository: BookRepository) {}
+    constructor(private bookrepository: MongoBookRepository) {}
 
-    async execute(bookID: string, book: Book): Promise<void> {
-        const bookFound = await this.bookrepository.getByID(bookID);
+    async execute(id: string, book: Book): Promise<void> {
+        const bookFound = await this.bookrepository.getByID(id);
         if(!bookFound) {
             throw new Error('Não foi possível localizar o livro');
         } else {

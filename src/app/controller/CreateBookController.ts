@@ -5,21 +5,19 @@ import { Book } from '../../core/entities/Book';
 
 export class CreateBookController{
     async handle(req: Request, res: Response): Promise<Response> {
-        const { title, author, genre, bookID } = req.body;
+        const { title, author, genre } = req.body;
 
-        const book = new Book(title, author, genre, bookID);
-        const bookRepository = new MongoBookRepository();
-        const createBook = new CreateBook(bookRepository);
+        const book = new Book(title, author, genre);
+        const bookRepo = new MongoBookRepository();
+        const createBook = new CreateBook(bookRepo);
 
         try {
-            await createBook.execute({ title, author, genre, bookID });
+            await createBook.execute({ title, author, genre });
             return res.status(201).json(book);
         } catch (e: any) {
-            return res.status(400).json({ error: e})
+            return res.status(400).json({ error: e })
         }
 
     }
 };
-    //   "title": "titulo",
-    //   "author": "autor",
-    //   "genre": "genero"
+   

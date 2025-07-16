@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { BookRepository } from '../../core/repository/BookRepository';
+// import { BookRepository } from '../../core/repository/BookRepository';
+import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
 import { DeleteBook } from '../../core/usecases/DeleteBook';
 
 export class DeleteBookController{
@@ -7,7 +8,7 @@ export class DeleteBookController{
         const { id } = req.params;
 
         try {
-            const delBook = DeleteBook(BookRepository);
+            const delBook = new DeleteBook(new MongoBookRepository());
             await delBook.execute(id);
             return res.status(200).send();
         } catch (e) {

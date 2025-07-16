@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
-import { CreateBookController } from './../controller/CreateBookController';
+import { CreateBookController } from '../controller/CreateBookController';
 import { GetBookByIDController } from '../controller/GetBookByIDController';
 import { UpdateBookController } from '../controller/UpdateBookController';
 import { DeleteBookController } from '../controller/DeleteBookController';
@@ -33,4 +33,4 @@ router.delete('/books/:id', async (req, res) => {
 
 
 
-export default router;
+export {router as bookRoutes};

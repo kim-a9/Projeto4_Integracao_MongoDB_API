@@ -1,16 +1,15 @@
 import { Book } from '../entities/Book';
-import { BookRepository } from '../repository/BookRepository';
+import { BookRepository } from "../../core/repository/BookRepository";
+// import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
 
 export interface ICreateBook{
     title: string;
     author: string;
     genre: string;
-    bookID: string;
-
 }
 
 export class CreateBook {
-    constructor(private bookRepository: BookRepository) {}
+    constructor(private bookRepo: BookRepository) {}
 
     async execute(data: ICreateBook): Promise<Book> {
         if (!data.title) {
@@ -19,11 +18,10 @@ export class CreateBook {
         const book = new Book(
             data.title,
             data.author,
-            data.genre,
-            data.bookID
+            data.genre
         );
 
-        await this.bookRepository.createBook(book);
-        return book;
+        const bookCreated = await this.bookRepo.createBook(book);
+        return bookCreated;
     }
 }
