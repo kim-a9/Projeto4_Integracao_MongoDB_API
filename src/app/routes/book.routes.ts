@@ -34,7 +34,12 @@ router.delete('/books/:id', async (req, res) => {
 });
 
 
-
+// {
+//   "_id": "ObjectId(68791103710d0d6e0f0fcdef)",
+//   "title": "Um defeito de cor", 
+//   "author": "Ana Maria Gonçalves", 
+//   "genre": "romance"
+// }
 
 
 

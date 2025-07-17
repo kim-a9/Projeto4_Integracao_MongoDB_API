@@ -11,8 +11,8 @@ export class DeleteBookController{
             const delBook = new DeleteBook(new MongoBookRepository());
             await delBook.execute(id);
             return res.status(200).send();
-        } catch (e) {
-            return res.status(400).json({ error: e});
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message });
         }
 
 

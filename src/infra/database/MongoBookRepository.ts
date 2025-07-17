@@ -20,18 +20,26 @@ export class MongoBookRepository implements BookRepository {
         async getByID(id: string): Promise<Book | null> {
             const doc = await BookModel.findOne({ _id: id });
 
-            // if(!id){
-            //     throw new Error('Não foi possível encontrar o livro');
-            // }
             return doc ? this.toEntity(doc): null;
         };
 
-        async updateBook(book: Book): Promise<void> {
-            throw new Error('Method not implemented.');
+        async updateBook(book: Book): Promise<Book | null>{
+            const doc = await BookModel.findByIdAndUpdate(
+                book.id, 
+                { 
+                    title: book.title,
+                    author: book.author,
+                    genre: book.genre
+                },
+                { new: true }
+            );
+            return doc ? this.toEntity(doc): null;
+
         };
 
         async delete(id: string): Promise<void> {
-            throw new Error('Method not implemented.');
+            const doc = await BookModel.findByIdAndDelete({ _id: id });
+            
         };
 
 }

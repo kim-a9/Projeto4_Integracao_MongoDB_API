@@ -1,19 +1,25 @@
 import { Request, Response } from 'express';
-// import { BookRepository } from '../../core/repository/BookRepository';
-import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
+import { bookRepository } from '../../infra/database/repositoryInstance';
+// import { MongoBookRepository } from '../../infra/database/MongoBookRepository';
 import { UpdateBook } from '../../core/usecases/UpdateBook';
 
 export class UpdateBookController{
     async handle(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        const book = req.body;
+        const { title, author, genre } = req.body;
+
+        if(!id){
+            throw new Error('Não foi possível encontrar o livro');
+        }
 
         try {
-            const updateBook = new UpdateBook(new MongoBookRepository());
-            await updateBook.execute(id, book);
-            return res.status(200).json({ message: 'Livro atualizado com sucesso' });
-        } catch (e) {
-            return res.status(400).json({ error: e});
+            const updateBook = await bookRepository.updateBook({id, title, author, genre})
+            res.json(updateBook);
+
+            return res.status(201).json('Livro atualizado com sucesso');
+
+        } catch (error: any) {
+            return res.status(400).json({ error: error.message});
         }
 
     }
