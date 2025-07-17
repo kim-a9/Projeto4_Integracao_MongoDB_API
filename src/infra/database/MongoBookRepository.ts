@@ -4,12 +4,17 @@ import { BookModel } from '../database/MongooseBookModel';
 
 export class MongoBookRepository implements BookRepository {
     private toEntity(doc: any): Book{
-        return new Book(doc.title, doc.author, doc.genre, doc.id.toString());
+        return new Book(doc.title, doc.author, doc.genre, doc.id); //.toString()
         }
         
         async createBook(book: Book): Promise<Book>{
             const doc = await BookModel.create(book);
             return this.toEntity(doc);
+        };
+
+        async getAll(): Promise<Book[]> {
+            const books = await BookModel.find();
+            return books.map((doc) => this.toEntity(doc));
         };
         
         async getByID(id: string): Promise<Book | null> {

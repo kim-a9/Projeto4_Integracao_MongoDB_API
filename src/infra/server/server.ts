@@ -7,7 +7,8 @@ import { connectToMongo } from '../database/mongoConnect';
 const app = express();
 app.use(express.json());
 
-app.use('/books', bookRoutes);
+app.use("/", bookRoutes);
+// app.use('/books', bookRoutes);
 
 connectToMongo();
 
