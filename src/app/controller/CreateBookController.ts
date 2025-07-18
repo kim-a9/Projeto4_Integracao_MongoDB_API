@@ -12,7 +12,7 @@ export class CreateBookController{
         const createBook = new CreateBook(bookRepo);
 
         try {
-            await createBook.execute({ title, author, genre });
+            await createBook.execute(book);
             return res.status(201).json(book);
         } catch (e: any) {
             return res.status(400).json({ error: e })
